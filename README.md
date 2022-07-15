@@ -9,12 +9,13 @@ The challenge is proposed at [decodingchallenge.org](https://decodingchallenge.o
 ## Milestones
 
 * [ ] understand decryption and encryption in McEliece Algorithm
+* [ ] size comparison of keys in relation to other crypto algorithms
 * [ ] implement McEliece in Python
     * [ ] public key, secrect key generation
     * [ ] generation of cipher $c = H*m + e$
 * [ ] find an $e$ by **brute-force**
 * [ ] increase security parameters until time threshold for brute force is too big
-* [ ] understand Prange's algorithm
+* [ ] understand Prange's algorithm and information set decoding (ISDs) in general
 * [ ] Compute a valid $e$ by Prange's algorithm
 * [ ] Time comparison (complexity comparison) of both methods
 
@@ -25,3 +26,19 @@ The challenge is proposed at [decodingchallenge.org](https://decodingchallenge.o
 **The challenge.** Here, we focus on instances with code rate $R=0.5$, that is $n=2k$. We will choose a weight $w$ slightly higher than the **Gilbert-Varshamov** bound: $$w=\lceil 1.05dGV \rceil$$ The matrix **H** and the syndrome **s** are picked uniformly at random. In this context, with very high probability there exists a vector $e$ of weight $(\le w)$ such that $$He^⊤=s^⊤$$
 
 Under these conditions, instances with cryptographic size are assumed to be out of reach, so we propose instances with increasing size to see how hard this problem is in practice. The Low-weight Codeword challenge proposes another approach: instances of fixed cryptographic size but where the goal is to make $w$ as small as possible. 
+
+
+## Linear codes in cryptography
+
+![image](images/code-based-overview.png)
+
+
+## ISDs
+
+Find low weight vectors formed from rows of **H**
+
+> 1. Permute columns **HP** = (A|B)
+> 2. Check wether A is invertible
+> 3. If so, compute M = $A^{-1}H = (I_{n-k}|Q)$
+> 4. Look for low weight $e = vM$ (linear combinations of rows of M)
+> 5. If successful: return $e' = vMP^{-1}$ else return to step 1
