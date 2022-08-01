@@ -1,11 +1,18 @@
+import sys
 from input_reader import Reader
 
 # call: python .\__init__.py
 def main():
-    r = Reader(10)
+    inputSize = 10
+
+    if (sys.argv.count > 1):
+        inputSize = int(sys.argv[1])
+
+    r = Reader(inputSize)
 
     print("Read Input...")
-    r.readInput()
+    params = r.readInput()
+    # params.info()
 
     print("Done.")
 

@@ -1,4 +1,4 @@
-import sys
+from parameters import Parameters
 
 class Reader:
     def __init__(self, levelOfComplexity):
@@ -21,15 +21,13 @@ class Reader:
             currentRow = lines[x]
             # read a single row
             for i in range(0,int(length/2)):
-                row.append(currentRow[i])
+                row.append(int(currentRow[i]))
             
             # append row to matrix
             matrix.append(row)
         
-        syndrome = lines[8 + int(length/2)]
+        syndrome = int(lines[8 + int(length/2)])
 
-        print(length)
-        print(seed)
-        print(targetWeight)
-        print(matrix)
-        print(syndrome)
+        inputParameters = Parameters(length, seed, targetWeight, matrix, syndrome)
+
+        return inputParameters
