@@ -1,3 +1,4 @@
+from this import d
 import numpy as np
 from parameters import Parameters
 
@@ -18,6 +19,28 @@ class McEliece:
 
         big_g = self.generate_big_g(g, s, p)
         t = self.get_max_errors_from_distance(d)
+
+        return big_g, t
+
+    def encryption(big_g, z, m):
+        # c = mG + z
+
+        cipher = np.matmul(m, big_g)
+        return cipher + z
+
+    def decryption(cipher, p, s, g):
+        # c' = c * P^-1 --> undo permutation
+        cipher_prime = np.matmul(cipher, p.I)
+
+        # decode hamming-code
+        # calculate hamming-code for each line of g
+        d       # todo
+        m_prime # todo
+
+        # m = m' * S^-1 --> get clear message
+        m = np.matmul(m_prime, s.I)
+        return m
+
 
     def generate_random_matrix(i, j):
         return np.random.randint(2, size=(int(i), int(j)))
